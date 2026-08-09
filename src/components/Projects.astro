@@ -1,5 +1,8 @@
 ---
+import ProjectCard from "../components/ProjectCard.astro";
+import { getCollection } from "astro:content";
 
+const allProjects = await getCollection("projects");
 ---
 
 <style>
@@ -8,4 +11,12 @@
     }
 </style>
 
-<div id="projects"><slot /></div>
+<div id="projects">
+    {
+        allProjects.map((project) => (
+            <ProjectCard>
+                <a href={project.data.url} target="_blank">{project.data.title}</a>: {project.data.description}
+            </ProjectCard>
+        ))
+    }
+</div>
